@@ -1,0 +1,93 @@
+# ============================================================
+# Family Medicare Clinic & Laboratory
+# Apache / Hostinger Shared Hosting Configuration
+# ============================================================
+
+Options -Indexes
+DirectoryIndex index.php login.php
+
+# ── PHP Settings ──
+<IfModule mod_php.c>
+    php_flag  display_errors           Off
+    php_flag  log_errors               On
+    php_value error_log                logs/php_errors.log
+    php_value session.cookie_httponly  1
+    php_value session.cookie_secure    1
+    php_value session.use_strict_mode  1
+    php_value upload_max_filesize      10M
+    php_value post_max_size            12M
+    php_value max_execution_time       60
+    php_value memory_limit             256M
+</IfModule>
+
+# ── HTTPS Redirect (skips localhost automatically) ──
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Skip HTTPS redirect on local/XAMPP
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Block access to sensitive files
+    RewriteRule ^\.env(\.example)?$     - [F,L]
+    RewriteRule ^\.gitignore$           - [F,L]
+    RewriteRule ^\.git(/.*)?$           - [F,L]
+    RewriteRule ^database/.*\.sql$      - [F,L]
+    RewriteRule ^database/seed.*\.php$  - [F,L]
+    RewriteRule ^config/(?!paths\.php)  - [F,L]
+    RewriteRule ^logs(/.*)?$            - [F,L]
+    RewriteRule ^.*\.(md|txt|sh|log)$   - [F,L]
+</IfModule>
+
+# ── Security Headers ──
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options  "nosniff"
+    Header always set X-Frame-Options         "SAMEORIGIN"
+    Header always set X-XSS-Protection        "1; mode=block"
+    Header always set Referrer-Policy         "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy      "geolocation=(), microphone=(), camera=()"
+    Header always unset X-Powered-By
+</IfModule>
+
+# ── MIME Types ──
+<IfModule mod_mime.c>
+    AddType application/manifest+json  .json
+    AddType application/javascript     .js
+    AddType image/png                  .png
+    AddType image/svg+xml              .svg
+    AddType image/x-icon               .ico
+</IfModule>
+
+# ── PWA: Service Worker & Manifest headers ──
+<Files "sw.js">
+    <IfModule mod_headers.c>
+        Header set Service-Worker-Allowed "/"
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Content-Type "application/javascript"
+    </IfModule>
+</Files>
+
+<Files "manifest.json">
+    <IfModule mod_headers.c>
+        Header set Content-Type "application/manifest+json"
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </IfModule>
+</Files>
+
+# ── Browser Caching ──
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png              "access plus 1 month"
+    ExpiresByType image/jpeg             "access plus 1 month"
+    ExpiresByType image/svg+xml          "access plus 1 month"
+    ExpiresByType image/x-icon           "access plus 1 year"
+    ExpiresByType text/css               "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType application/json       "access plus 0 seconds"
+</IfModule>
+
+# ── GZIP Compression ──
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/plain text/xml
+</IfModule>

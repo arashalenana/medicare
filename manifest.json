@@ -1,0 +1,93 @@
+{
+  "id": "com.familymedicare.pos.app",
+  "name": "Family Medicare POS System",
+  "short_name": "Family Medicare",
+  "description": "Family Medicare Clinic & Laboratory POS System - Manage consultations, lab tests, medicines, patients, and prescriptions",
+  "start_url": "./login.php?pwa=1",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#ED1C24",
+  "background_color": "#ffffff",
+  "categories": ["business", "productivity", "medical", "healthcare"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "assets/icons/icon-72x72.png?v=2024",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-96x96.png?v=2024",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-128x128.png?v=2024",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-144x144.png?v=2024",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-152x152.png?v=2024",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png?v=2024",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-384x384.png?v=2024",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png?v=2024",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Sale",
+      "short_name": "Sale",
+      "description": "Create a new sale transaction",
+      "url": "./pages/sales.php",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192x192.png?v=2024",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Medicines",
+      "short_name": "Medicines",
+      "description": "Manage medicines inventory",
+      "url": "./pages/medicines.php",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192x192.png?v=2024",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
