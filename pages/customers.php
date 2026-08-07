@@ -14,7 +14,7 @@ include '../includes/header.php';
 include '../includes/sidebar.php';
 
 $role = $_SESSION['role'] ?? '';
-$can_set_service = in_array($role, ['Admin', 'Receptionist']);
+$can_set_service = in_array($role, ['Admin', 'Receptionist', 'Cashier', 'Guest']);
 
 $message = "";
 
