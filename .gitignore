@@ -1,8 +1,4 @@
-# ============================================================
-# Family Medicare — Git Ignore
-# ============================================================
-
-# Real credentials — NEVER push to GitHub
+# Family Medicare
 .env
 
 # Error logs
