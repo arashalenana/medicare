@@ -25,7 +25,7 @@
     ?>
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="<?php echo $asset_path; ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS loaded via defer in header.php -->
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -24,3 +24,10 @@ nbproject/
 # Dependencies (if added later)
 vendor/
 node_modules/
+
+# PHP / web server config
+.htaccess
+.user.ini
+
+# Laravel / framework config
+bootstrap/cache/

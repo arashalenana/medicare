@@ -188,7 +188,7 @@ if ($type === 'sales') {
 
     <div class="no-print-actions">
         <button onclick="window.print()" class="btn btn-print"><i class="fas fa-print"></i> Print / Save as PDF</button>
-        <a href="reports_enhanced.php" class="btn btn-back">Back to Reports</a>
+        <a href="reports_enhanced.php" class="btn btn-back">Back</a>
     </div>
 </body>
 </html>

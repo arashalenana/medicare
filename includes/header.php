@@ -1,6 +1,5 @@
 <?php
 // Header Include
- 
 
 // Load centralized path configuration (safe, idempotent)
 if (!defined('FAMILYMEDICARE_PATHS_LOADED')) {
@@ -29,10 +28,16 @@ if (!defined('FAMILYMEDICARE_RBAC_LOADED')) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $asset_path; ?>images/favicon-16x16.png">
     <link rel="shortcut icon" href="<?php echo $asset_path; ?>images/favicon.png">
 
+    <!-- Preload critical assets so browser fetches them immediately -->
+    <link rel="preload" href="<?php echo $asset_path; ?>vendor/bootstrap/css/bootstrap.min.css" as="style">
+    <link rel="preload" href="<?php echo $asset_path; ?>vendor/fontawesome/css/all.min.css" as="style">
+    <link rel="preload" href="<?php echo $asset_path; ?>vendor/fontawesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="<?php echo $asset_path; ?>css/style.css" as="style">
+
     <!-- Bootstrap CSS -->
     <link href="<?php echo $asset_path; ?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font Awesome -->
+    <!-- Font Awesome (woff2 only — fastest loading) -->
     <link rel="stylesheet" href="<?php echo $asset_path; ?>vendor/fontawesome/css/all.min.css">
 
     <!-- Application CSS -->
@@ -41,8 +46,11 @@ if (!defined('FAMILYMEDICARE_RBAC_LOADED')) {
     <!-- AI Assistant CSS -->
     <link rel="stylesheet" href="<?php echo $chatbot_path; ?>ai-assistant.css">
 
-    <!-- Chart.js -->
-    <script src="<?php echo $asset_path; ?>vendor/chartjs/chart.min.js"></script>
+    <!-- Chart.js — defer so it doesn't block page render -->
+    <script src="<?php echo $asset_path; ?>vendor/chartjs/chart.min.js" defer></script>
+
+    <!-- Bootstrap JS — defer so it doesn't block page render -->
+    <script src="<?php echo $asset_path; ?>vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
 
     <!-- PWA: Manifest, meta tags, and service worker registration -->
     <?php include dirname(__FILE__) . '/pwa.php'; ?>

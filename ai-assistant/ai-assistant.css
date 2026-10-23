@@ -204,3 +204,11 @@
         bottom: calc(20px + env(safe-area-inset-bottom));
     }
 }
+
+/* Hide chatbot and messaging widget when printing any page */
+@media print {
+    #chatbot-container,
+    #msg-widget {
+        display: none !important;
+    }
+}

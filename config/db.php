@@ -1,5 +1,11 @@
 <?php
-// Database Configuration and Connection 
+// Database Configuration and Connection
+
+// Suppress errors immediately — deployment.php will re-enable if APP_DEBUG=true
+// Ensures no errors leak on production before .env is read
+@ini_set('display_errors', '0');
+@ini_set('display_startup_errors', '0');
+@error_reporting(0);
 
 // Load deployment configuration
 if (!defined('DB_HOST')) {

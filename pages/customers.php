@@ -64,6 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
                 $stmt = $conn->prepare("DELETE FROM patients WHERE id=?");
                 $stmt->execute([$id]);
+                // Reset counter to 1 if table is now empty
+                $remaining = $conn->query("SELECT COUNT(*) FROM patients")->fetchColumn();
+                if ($remaining == 0) {
+                    $conn->exec("ALTER TABLE patients AUTO_INCREMENT = 1");
+                }
                 $message = "<div class='alert alert-success'>Patient deleted successfully!</div>";
             } catch (PDOException $e) {
                 $message = "<div class='alert alert-danger'>Error: " . $e->getMessage() . "</div>";
@@ -80,8 +85,8 @@ try {
 
 if (empty($customers)) {
     $customers = [
-        ['id'=>1,'first_name'=>'John','last_name'=>'Doe','phone'=>'0712345678','age'=>35,'place'=>'Westlands','service'=>'Consultation','created_at'=>date('Y-m-d H:i:s')],
-        ['id'=>2,'first_name'=>'Jane','last_name'=>'Smith','phone'=>'0723456789','age'=>28,'place'=>'Karen','service'=>'Lab','created_at'=>date('Y-m-d H:i:s')]
+        ['id'=>1,'first_name'=>'John','last_name'=>'Kamau','phone'=>'0712345678','age'=>35,'place'=>'Westlands','service'=>'Consultation','created_at'=>date('Y-m-d H:i:s')],
+        ['id'=>2,'first_name'=>'Jane','last_name'=>'Wangari','phone'=>'0723456789','age'=>28,'place'=>'Karen','service'=>'Lab','created_at'=>date('Y-m-d H:i:s')]
     ];
     $is_dummy_customers = true;
 }

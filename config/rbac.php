@@ -63,7 +63,11 @@ const ROLE_PERMISSIONS = [
         'patient_edit'   => true,
         'patient_delete' => false,
         'patient_history'=> false,
+<<<<<<< HEAD
         'consultations'  => true,
+=======
+        'consultations'  => false,
+>>>>>>> 404f1a2 (database fix)
         'lab_tests'      => true,
         'prescriptions'  => true,
         'medicines'      => true,

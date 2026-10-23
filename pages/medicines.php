@@ -56,22 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $id = (int)$_POST['id'];
             try {
-                $stmt = $conn->prepare("DELETE FROM medicines WHERE id=?");
+                // Soft delete — marks inactive so sale history stays intact
+                $stmt = $conn->prepare("UPDATE medicines SET is_active = 0 WHERE id = ?");
                 $stmt->execute([$id]);
-                $message = "<div class='alert alert-success'>Medicine deleted successfully!</div>";
+                $message = "<div class='alert alert-success'>Medicine removed successfully!</div>";
             } catch (PDOException $e) {
-                $message = "<div class='alert alert-danger'>Error: " . $e->getMessage() . "</div>";
+                // Fallback: if is_active column doesn't exist yet, show helpful message
+                $message = "<div class='alert alert-warning'>Please run the database update first: <code>add_medicine_soft_delete.sql</code></div>";
             }
         }
     }
 }
 
-// Fetch Medicines
+// Fetch Active Medicines only
 $medicines = [];
 try {
-    $stmt = $conn->query("SELECT * FROM medicines ORDER BY name ASC");
+    $stmt = $conn->query("SELECT * FROM medicines WHERE is_active = 1 ORDER BY name ASC");
     $medicines = $stmt->fetchAll();
-} catch (PDOException $e) {}
+} catch (PDOException $e) {
+    // Fallback if is_active column not yet added
+    try {
+        $stmt = $conn->query("SELECT * FROM medicines ORDER BY name ASC");
+        $medicines = $stmt->fetchAll();
+    } catch (PDOException $e2) {}
+}
 
 // Dummy medicines for demo when DB empty
 if (empty($medicines)) {

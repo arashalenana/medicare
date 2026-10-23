@@ -251,47 +251,7 @@ if ($role !== 'Admin') {
 
                     <div class="col-lg-6 hero-illustration">
                         <img src="<?php echo $asset_path; ?>images/hero-illustration.jpg" alt="Illustration of a doctor caring for a child" class="img-fluid">
-                        <!-- <svg viewBox="0 0 480 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a doctor caring for a child">
-                            <circle cx="240" cy="210" r="190" fill="#e6f8fc"/>
-                            <circle cx="240" cy="210" r="150" fill="#ffffff"/>
-
-                            <!-- Doctor -->
-                            <g>
-                                <rect x="120" y="190" width="100" height="150" rx="30" fill="#00AEDB"/>
-                                <circle cx="170" cy="150" r="42" fill="#f3c9a3"/>
-                                <path d="M128 150a42 42 0 0 1 84 0v6h-84z" fill="#3a2e26"/>
-                                <rect x="150" y="186" width="40" height="18" rx="9" fill="#f3c9a3"/>
-                                <rect x="118" y="200" width="22" height="80" rx="11" fill="#00AEDB"/>
-                                <circle cx="160" cy="232" r="10" fill="#ffffff"/>
-                                <rect x="156" y="232" width="8" height="38" rx="4" fill="#ffffff"/>
-                                <circle cx="160" cy="278" r="6" fill="#ffffff"/>
-                            </g>
-
-                            <!-- Child -->
-                            <g>
-                                <rect x="248" y="240" width="78" height="100" rx="26" fill="#ED1C24"/>
-                                <circle cx="287" cy="208" r="32" fill="#f7d2ab"/>
-                                <path d="M255 208a32 32 0 0 1 64 0c0 4-4 4-8 2-10-5-18-5-24-12-6 7-16 9-24 12-4 2-8 2-8-2z" fill="#5a3a22"/>
-                                <circle cx="277" cy="210" r="3.2" fill="#3a2e26"/>
-                                <circle cx="297" cy="210" r="3.2" fill="#3a2e26"/>
-                                <path d="M278 222q9 7 18 0" stroke="#a85a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                            </g>
-
-                            <!-- Connecting hand holding -->
-                            <rect x="222" y="262" width="30" height="14" rx="7" fill="#f3c9a3"/>
-
-                            <!-- Medical cross badge -->
-                            <g>
-                                <circle cx="370" cy="120" r="26" fill="#ffffff" stroke="#ED1C24" stroke-width="4"/>
-                                <rect x="362" y="108" width="16" height="24" rx="3" fill="#ED1C24"/>
-                                <rect x="358" y="112" width="24" height="16" rx="3" fill="#ED1C24"/>
-                            </g>
-
-                            <!-- Stethoscope accent -->
-                            <path d="M140 110c0-14 11-22 22-22s20 8 20 20" stroke="#00AEDB" stroke-width="5" fill="none" stroke-linecap="round"/>
-                            <circle cx="140" cy="112" r="6" fill="#00AEDB"/>
-                            <circle cx="182" cy="108" r="6" fill="#00AEDB"/>
-                        </svg> -->
+                       
                     </div>
                 </div>
             </div>

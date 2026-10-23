@@ -2,8 +2,28 @@
 // Messaging Widget — included in footer.php for all logged-in users
 if (!isset($_SESSION['user_id'])) return;
 
-$current_username  = htmlspecialchars($_SESSION['username'] ?? '');
-$current_user_id   = (int)($_SESSION['user_id'] ?? 0);
+// Build absolute API URL robustly — works on localhost, InfinityFree, and Hostinger
+$_protocol  = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+              ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https' ||
+              ($_SERVER['SERVER_PORT'] ?? 80) == 443 ? 'https' : 'http';
+$_host      = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$_script    = $_SERVER['SCRIPT_NAME'] ?? '';
+
+// Walk up from current script to find the project root (where messaging_api.php lives)
+$_dir = dirname($_script);
+// If we're inside /pages/ or /pages/api/, go up accordingly
+if (strpos($_script, '/pages/api/') !== false) {
+    $_root = dirname(dirname($_dir));
+} elseif (strpos($_script, '/pages/') !== false) {
+    $_root = dirname($_dir);
+} else {
+    $_root = $_dir;
+}
+$_root = rtrim(str_replace('\\', '/', $_root), '/');
+$_msg_api_url = $_protocol . '://' . $_host . $_root . '/messaging_api.php';
+
+$current_username = htmlspecialchars($_SESSION['username'] ?? '');
+$current_user_id  = (int)($_SESSION['user_id'] ?? 0);
 ?>
 
 <style>
@@ -347,7 +367,7 @@ $current_user_id   = (int)($_SESSION['user_id'] ?? 0);
 
 <script>
 (function () {
-    const API      = '<?php echo $base_url; ?>messaging_api.php';
+    const API      = '<?php echo $_msg_api_url; ?>';
     const ME       = <?php echo $current_user_id; ?>;
     const ROLE_CSS = { 'Admin':'role-admin','Receptionist':'role-receptionist','Cashier':'role-cashier','Lab Tech':'role-lab','Guest':'role-guest' };
 

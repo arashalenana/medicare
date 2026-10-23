@@ -207,7 +207,7 @@ try {
                                         <td><?php echo htmlspecialchars($patientName); ?></td>
                                         <td class="fw-bold"><?php echo formatKSh($sale['total_amount']); ?></td>
                                         <td>
-                                            <a href="pages/generate_receipt.php?id=<?php echo $sale['id']; ?>" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                            <a href="pages/generate_receipt.php?id=<?php echo $sale['id']; ?>" class="btn btn-sm btn-outline-secondary">
                                                 <i class="fas fa-print"></i>
                                             </a>
                                         </td>

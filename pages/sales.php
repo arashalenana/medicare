@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['complete_sale'])) {
 // Fetch Medicines for selection
 $medicines = [];
 try {
-    $stmt = $conn->query("SELECT * FROM medicines WHERE quantity > 0 ORDER BY name ASC");
+    $stmt = $conn->query("SELECT * FROM medicines WHERE quantity > 0 AND (is_active = 1 OR is_active IS NULL) ORDER BY name ASC");
     $medicines = $stmt->fetchAll();
 } catch (PDOException $e) {}
 
@@ -103,8 +103,8 @@ try {
 
 if (empty($customers)) {
     $customers = [
-        ['id'=>1,'first_name'=>'John','last_name'=>'Doe'],
-        ['id'=>2,'first_name'=>'Jane','last_name'=>'Smith']
+        ['id'=>1,'first_name'=>'John','last_name'=>'Kamau'],
+        ['id'=>2,'first_name'=>'Jane','last_name'=>'Wangari']
     ];
 }
 ?>

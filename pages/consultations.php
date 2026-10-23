@@ -168,7 +168,11 @@ if (empty($patients)) {
                             <th>Doctor</th>
                             <th>Date</th>
                             <th>Reason</th>
+<<<<<<< HEAD
                             <th>Previous Diagnosis</th>
+=======
+                            <th>Previous History</th>
+>>>>>>> 404f1a2 (database fix)
                             <th>Diagnosis</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -290,7 +294,11 @@ if (empty($patients)) {
                             <textarea class="form-control" name="reason" rows="2" placeholder="Main symptoms or reason for visit"></textarea>
                         </div>
                         <div class="col-12">
+<<<<<<< HEAD
                             <label class="form-label fw-bold">Previous Diagnosis</label>
+=======
+                            <label class="form-label fw-bold">Previous History</label>
+>>>>>>> 404f1a2 (database fix)
                             <textarea class="form-control" name="previous_diagnosis" rows="2" placeholder="Any prior diagnosis relevant to this visit"></textarea>
                         </div>
                         <div class="col-12">

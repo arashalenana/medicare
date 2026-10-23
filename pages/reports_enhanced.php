@@ -64,11 +64,7 @@ try {
     $error_msg = "Error fetching revenue data: " . $e->getMessage();
 }
 
-if (empty($revenue_data)) {
-    $revenue_data = [
-        ['date'=>date('Y-m-d'),'daily_revenue'=>1200.00,'transaction_count'=>3,'consultation_revenue'=>600.00,'medication_revenue'=>400.00,'lab_revenue'=>200.00,'drug_revenue'=>0.00]
-    ];
-}
+// No dummy fallback — show real data only
 
 // Sales History (individual transactions, for receipts)
 $sales_history = [];
@@ -101,7 +97,7 @@ try {
 }
 
 if (empty($patient_stats)) {
-    $patient_stats = ['total_patients'=>2,'consultations'=>4,'lab_tests'=>2,'prescriptions'=>3];
+    $patient_stats = ['total_patients'=>0,'consultations'=>0,'lab_tests'=>0,'prescriptions'=>0];
 }
 
 // Billing Statistics
@@ -151,11 +147,7 @@ try {
     $error_msg = "Error fetching inventory data: " . $e->getMessage();
 }
 
-if (empty($inventory_data)) {
-    $inventory_data = [
-        ['name'=>'Paracetamol','quantity'=>50,'selling_price'=>30.00,'total_value'=>1500.00,'expiry_date'=>date('Y-m-d', strtotime('+12 months')),'status'=>'OK']
-    ];
-}
+// No dummy fallback — show real inventory only
 
 // Consultation Report
 $consultation_data = [];
@@ -175,9 +167,7 @@ try {
     $error_msg = "Error fetching consultation data: " . $e->getMessage();
 }
 
-if (empty($consultation_data)) {
-    $consultation_data = [ ['doctor_name'=>'Dr. Alice','consultation_count'=>3,'completed'=>2,'pending'=>1] ];
-}
+// No dummy fallback — show real consultation data only
 
 // Lab Tests Report
 $lab_data = [];
@@ -199,7 +189,7 @@ try {
 }
 
 if (empty($lab_data)) {
-    $lab_data = [ ['test_category'=>'Hematology','total_tests'=>5,'completed'=>4,'pending'=>1,'total_revenue'=>4000.00] ];
+    $lab_data = [];
 }
 
 // Calculate totals
@@ -311,7 +301,7 @@ if ($patient_stats) {
                 <div class="card-body">
                     <h6 class="fw-bold text-danger text-uppercase mb-1">Sales Report</h6>
                     <div class="h5 mb-3 fw-bold text-gray-800">KSh <?php echo number_format($total_revenue, 2); ?></div>
-                    <a href="generate_report.php?type=sales&start_date=<?php echo $start_date; ?>&end_date=<?php echo $end_date; ?>" target="_blank" class="btn btn-sm btn-danger">
+                    <a href="generate_report.php?type=sales&start_date=<?php echo $start_date; ?>&end_date=<?php echo $end_date; ?>" class="btn btn-sm btn-danger">
                         <i class="fas fa-file-pdf me-1"></i> Generate PDF
                     </a>
                 </div>
@@ -322,7 +312,7 @@ if ($patient_stats) {
                 <div class="card-body">
                     <h6 class="fw-bold text-warning text-uppercase mb-1">Low Stock</h6>
                     <div class="h5 mb-3 fw-bold text-gray-800"><?php echo count(array_filter($inventory_data, fn($i) => $i['status'] === 'Low Stock')); ?> Items Alerted</div>
-                    <a href="generate_report.php?type=low_stock" target="_blank" class="btn btn-sm btn-warning">
+                    <a href="generate_report.php?type=low_stock" class="btn btn-sm btn-warning">
                         <i class="fas fa-file-pdf me-1"></i> Generate PDF
                     </a>
                 </div>
@@ -333,7 +323,7 @@ if ($patient_stats) {
                 <div class="card-body">
                     <h6 class="fw-bold text-info text-uppercase mb-1">Expiry Report</h6>
                     <div class="h5 mb-3 fw-bold text-gray-800"><?php echo count(array_filter($inventory_data, fn($i) => $i['status'] === 'Expiring Soon' || $i['status'] === 'Expired')); ?> Items Expiring</div>
-                    <a href="generate_report.php?type=expiry" target="_blank" class="btn btn-sm btn-info">
+                    <a href="generate_report.php?type=expiry" class="btn btn-sm btn-info">
                         <i class="fas fa-file-pdf me-1"></i> Generate PDF
                     </a>
                 </div>
@@ -374,7 +364,7 @@ if ($patient_stats) {
                                 <td><?php echo htmlspecialchars($sale['staff_name']); ?></td>
                                 <td><?php echo date('H:i', strtotime($sale['created_at'])); ?></td>
                                 <td>
-                                    <a href="generate_receipt.php?id=<?php echo $sale['id']; ?>" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                    <a href="generate_receipt.php?id=<?php echo $sale['id']; ?>" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-print"></i> Receipt
                                     </a>
                                 </td>
@@ -750,7 +740,8 @@ if ($patient_stats) {
         .no-print-section,
         .print-hide-header,
         #sidebar, .navbar, #sidebarCollapse,
-        .card-header .btn, .card-header form {
+        .card-header .btn, .card-header form,
+        #chatbot-container, #msg-widget {
             display: none !important;
         }
 

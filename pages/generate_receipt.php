@@ -239,19 +239,64 @@ $padding       = $is_thermal ? '4mm' : '15mm';
     <table>
         <thead>
             <tr>
-                <th>Item</th>
+                <th>Item / Service</th>
                 <th>Qty</th>
                 <th>KSh</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($items as $item): ?>
+            <?php
+            $has_items    = !empty($items);
+            $drug_sales   = floatval($sale['drug_sales']     ?? 0);
+            $lab_fee      = floatval($sale['lab_fee']        ?? 0);
+            $med_fee      = floatval($sale['medication_fee'] ?? 0);
+            ?>
+
+            <?php if ($has_items): ?>
+                <!-- Drug Sales section header -->
+                <tr style="background:#f8f8f8;">
+                    <td colspan="3" style="font-weight:bold; font-size:<?php echo $is_thermal ? '10px' : '12px'; ?>; padding:4px 2px; letter-spacing:0.04em;">
+                        ── Drug Sales ──
+                    </td>
+                </tr>
+                <?php foreach ($items as $item): ?>
+                <tr>
+                    <td style="padding-left:6px;"><?php echo htmlspecialchars($item['medicine_name']); ?></td>
+                    <td><?php echo $item['quantity']; ?></td>
+                    <td><?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
+                </tr>
+                <?php endforeach; ?>
+
+            <?php elseif ($drug_sales > 0): ?>
+                <!-- No sale_items but drug_sales amount exists (billing-only) -->
+                <tr>
+                    <td>Drug Sales</td>
+                    <td>1</td>
+                    <td><?php echo number_format($drug_sales, 2); ?></td>
+                </tr>
+            <?php endif; ?>
+
+            <?php if ($med_fee > 0): ?>
             <tr>
-                <td><?php echo htmlspecialchars($item['medicine_name']); ?></td>
-                <td><?php echo $item['quantity']; ?></td>
-                <td><?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
+                <td>Medication Fee</td>
+                <td>1</td>
+                <td><?php echo number_format($med_fee, 2); ?></td>
             </tr>
-            <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if ($lab_fee > 0): ?>
+            <tr>
+                <td>Lab Fee</td>
+                <td>1</td>
+                <td><?php echo number_format($lab_fee, 2); ?></td>
+            </tr>
+            <?php endif; ?>
+
+            <?php if (!$has_items && $drug_sales <= 0 && $med_fee <= 0 && $lab_fee <= 0): ?>
+            <tr>
+                <td colspan="3" style="text-align:center; color:#888; padding:6px 0;">No items recorded</td>
+            </tr>
+            <?php endif; ?>
         </tbody>
     </table>
 
@@ -260,6 +305,18 @@ $padding       = $is_thermal ? '4mm' : '15mm';
             <span>TOTAL:</span>
             <span>KSh <?php echo number_format($sale['total_amount'], 2); ?></span>
         </div>
+        <?php if (isset($sale['amount_paid']) && floatval($sale['amount_paid']) > 0): ?>
+        <div class="total-sub">
+            <span>Amount Paid:</span>
+            <span>KSh <?php echo number_format($sale['amount_paid'], 2); ?></span>
+        </div>
+        <?php if (floatval($sale['balance'] ?? 0) > 0): ?>
+        <div class="total-sub" style="font-weight:bold; color:#c00;">
+            <span>Balance Due:</span>
+            <span>KSh <?php echo number_format($sale['balance'], 2); ?></span>
+        </div>
+        <?php endif; ?>
+        <?php endif; ?>
         <div class="total-sub">
             <span>Payment:</span>
             <span><?php echo htmlspecialchars($sale['payment_method']); ?></span>
@@ -280,7 +337,7 @@ $padding       = $is_thermal ? '4mm' : '15mm';
 <div class="screen-actions">
     <button onclick="window.print()" class="btn btn-thermal">🖨️ Print (Thermal)</button>
     <a href="?id=<?php echo $sale_id; ?>&mode=a4" class="btn btn-a4">📄 A4 Version</a>
-    <a href="reports_enhanced.php" class="btn btn-back">← Back</a>
+    <a href="billing.php" class="btn btn-back">← Back</a>
 </div>
 
 <?php if ($is_thermal): ?>

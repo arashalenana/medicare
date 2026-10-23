@@ -1,4 +1,6 @@
 <?php
+// Fix session cookie path for subdirectory hosting (InfinityFree, Hostinger)
+session_set_cookie_params(['path' => '/']);
 session_start();
 require_once 'config/db.php';
 require_once 'config/paths.php';
